@@ -1,15 +1,20 @@
-new MessageBuilder()
-  .append("_")
-  .setEmbed(new EmbedBuilder()
-    .setTitle("**RULES MAY BE CHANGED OR UPDATED IN FUTURE**", "https://discordapp.com")
-    .setDescription("1⃣ Respect the channels and their uses: Disrespect, direct harassment and Violent Behavior will result in a warning and/or kick.")
-    .setColor(new Color(2468856))
-    .setTimestamp(OffsetDateTime.parse("2017-07-08T08:11:03.6"))
-    .setFooter("footer text", "https://cdn.discordapp.com/embed/avatars/0.png")
-    .addField("😂", "2⃣ Do not advertise in this server or through PMs: You are not allowed to advertise your Discord server, YouTube, Twitch or anything else. This server is for friends to come together, not to make money or getting more famous.", false)
-    .addField("😘", "3⃣ Do not Instigate situations: If incidents occur and no admin is available, deescalate the situation. If anyone is caught egging on the incident the same action of punishment will be admitted to them as well. ", false)
-    .addField("🙄", "4⃣ Do not spam neither voice or text chat: Spamming voice and/or text will result with immediate mute followed by a warning. Continual spam will result with a one day ban from the discord.  ", false)
-    .addField("😜", "5⃣ Explicit content is to not be posted in the general chat. We have two chats to help filter out content posted in the discord, one for general members under the age of 18 and those who are 18+. If you wish to be able to post explicit content you must be given the correct role to join into the seperated chat. ", false)
-    .addField("<:thonkang:219069250692841473>", "are inline fields", false)
-    .build())
-  .build();
+# post a message to discord api via a bot
+# bot must be added to the server and have write access to the channel
+# you may need to connect with a websocket the first time you run the bot
+#   use a library like discord.py to do so
+import requests
+import json
+
+channelID = "your_id_goes_here" # enable dev mode on discord, right-click on the channel, copy ID
+botToken = "your_token_here"    # get from the bot page. must be a bot, not a discord app
+
+baseURL = "https://discordapp.com/api/channels/{}/messages".format(channelID)
+headers = { "Authorization":"Bot {}".format(botToken),
+            "User-Agent":"myBotThing (http://some.url, v0.1)",
+            "Content-Type":"application/json", }
+
+message = "hello world"
+
+POSTedJSON =  json.dumps ( {"content":message} )
+
+r = requests.post(baseURL, headers = headers, data = POSTedJSON)
